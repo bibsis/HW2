@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :notes
+<<<<<<< HEAD
   post '/notes/api' , to: 'notes#api'
+=======
+  get 'notes/api'
+  post "notes/api" => "notes#api"
+>>>>>>> d3d4e39016cabdc28cead7db38ef16cf207be89f
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

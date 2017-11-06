@@ -2,6 +2,7 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   def api
+<<<<<<< HEAD
    if request.content_type =~ /xml/
               params[:message] = Hash.from_xml(request.body.read)["message"]
               note = Note.create(content: params[:message])
@@ -16,6 +17,10 @@ class NotesController < ApplicationController
         end
   end
 
+=======
+  format.json { render :show, status: :created, location: @note }
+  end
+>>>>>>> d3d4e39016cabdc28cead7db38ef16cf207be89f
   # GET /notes
   # GET /notes.json
   def index
@@ -43,7 +48,11 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
+<<<<<<< HEAD
         format.html { render "info", locals: {url: notes_url + "/" + @note.id.to_s } }
+=======
+        format.html { render "info", locals: {url: "https://homework-tp.herokuapp.com/notes/" + @note.id.to_s } }
+>>>>>>> d3d4e39016cabdc28cead7db38ef16cf207be89f
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
