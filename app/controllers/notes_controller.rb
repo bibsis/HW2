@@ -1,6 +1,21 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
+  def api
+   if request.content_type =~ /xml/
+              params[:message] = Hash.from_xml(request.body.read)["message"]
+              note = Note.create(content: params[:message])
+              render xml:
+              '<?xml version = "1.0" encoding = "UTF-8" standalone = "yes"?>' +
+              '<url>' +
+                notes_url + '/' + note.id.to_s +
+              '</url>'
+        elsif request.content_type =~ /json/
+              note = Note.create(content: params[:message])
+              render json: {url: notes_url + '/' + note.id.to_s}
+        end
+  end
+
   # GET /notes
   # GET /notes.json
   def index
@@ -28,7 +43,7 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
-        format.html { render "info", locals: {url: "localhost:3000/notes/" + @note.id.to_s } }
+        format.html { render "info", locals: {url: notes_url + "/" + @note.id.to_s } }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
